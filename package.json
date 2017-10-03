@@ -1,0 +1,25 @@
+{
+  "name": "plex-scripts",
+  "version": "1.0.0",
+  "description": "Repo for nodejs plex scripts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trainerbill/plex-scripts.git"
+  },
+  "keywords": [
+    "plex"
+  ],
+  "author": "Andrew Throener",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trainerbill/plex-scripts/issues"
+  },
+  "homepage": "https://github.com/trainerbill/plex-scripts#readme",
+  "dependencies": {
+    "glob": "^7.1.2"
+  }
+}
