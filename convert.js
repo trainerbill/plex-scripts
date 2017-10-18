@@ -2,7 +2,7 @@ const path = require("path");
 const glob = require("glob");
 const child_process = require("child_process");
 const options = {
-	glob: "/srv/mythtv/plex/**/*.ts",
+	glob: "/media/athroener/plex/**/*.ts",
 	max: 1000,
 }
 
@@ -17,39 +17,34 @@ function encode(file) {
 	const npath = path.parse(file);
 	delete npath.base;
 	npath.ext = ".mp4";
-        const command = `ffmpeg -y -i "${file}" -c:v libx264 -preset ultrafast -crf 25 -ac 2 -c:a aac -b:a 128k -movflags +faststart -strict -2 "${path.format(npath)}"`; 
-	const result = child_process.spawnSync("ffmpeg", [
+        const args = [
 		"-y",
+		"-hwaccel",
+		"cuvid",
+		"-c:v",
+		"mpeg2_cuvid",
 		"-i",
 		file,
 		"-c:v",
-		"libx264",
+		"h264_nvenc",
 		"-preset",
-		"ultrafast",
-		"-crf",
-		"25",
-		"-ac",
-		"2",
-		"-c:a",
-		"aac",
-		"-b:a",
-		"128k",
-		"-movflags",
-		"+faststart",
-		"-strict",
-		"-2",
+		"slow",
 		path.format(npath),
-	],
+	];
+        const command = `ffmpeg ${args.join(" ")}`;
+	console.log(command);
+	// process.exit(1);
+	const result = child_process.spawnSync("ffmpeg", args,
 	{
 		stdio: "inherit",
 	}
 	);
 	console.log("Error", result.error);	
 	console.log(result.output);
-
 	if (result.status === 0) {
 		console.log("Removing file");
 		child_process.spawnSync("rm", [file]);
 	}
 }
+
 
